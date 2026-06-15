@@ -1,12 +1,12 @@
 const APP_NAME = "Browser Share Lab";
 
 function html(body: string, init: ResponseInit = {}): Response {
+	const headers = new Headers(init.headers);
+	headers.set("content-type", "text/html; charset=utf-8");
+
 	return new Response(body, {
 		...init,
-		headers: {
-			"content-type": "text/html; charset=utf-8",
-			...init.headers,
-		},
+		headers,
 	});
 }
 
@@ -351,9 +351,7 @@ async function renderShare(request: Request): Promise<Response> {
 		return `<dt>${escapeHtml(name)}</dt><dd>${value ? escapeHtml(value) : "<em>empty</em>"}</dd>`;
 	});
 
-	const files = form
-		.getAll("files")
-		.filter((value): value is File => typeof value !== "string");
+	const files = form.getAll("files").filter((value): value is File => typeof value !== "string");
 
 	const fileRows =
 		files.length > 0
@@ -396,7 +394,7 @@ async function renderShare(request: Request): Promise<Response> {
 }
 
 export default {
-	async fetch(request): Promise<Response> {
+	async fetch(request, _env, _ctx): Promise<Response> {
 		const url = new URL(request.url);
 
 		if (url.pathname === "/") {

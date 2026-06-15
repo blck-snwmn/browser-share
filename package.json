@@ -3,17 +3,29 @@
 	"version": "0.0.0",
 	"private": true,
 	"scripts": {
+		"build": "wrangler deploy --dry-run",
 		"deploy": "wrangler deploy",
 		"dev": "wrangler dev",
+		"fmt": "oxfmt --write .",
+		"fmt:check": "oxfmt --check .",
+		"lint": "oxlint --deny-warnings .",
 		"start": "wrangler dev",
 		"test": "vitest",
+		"typecheck": "tsc --noEmit",
 		"cf-typegen": "wrangler types"
 	},
 	"devDependencies": {
 		"@cloudflare/vitest-pool-workers": "^0.12.4",
 		"@types/node": "^25.9.3",
+		"oxfmt": "0.54.0",
+		"oxlint": "1.69.0",
+		"oxlint-tsgolint": "0.23.0",
 		"typescript": "^5.5.2",
 		"vitest": "~3.2.0",
 		"wrangler": "^4.100.0"
-	}
+	},
+	"engines": {
+		"node": "24"
+	},
+	"packageManager": "pnpm@10.24.0"
 }
